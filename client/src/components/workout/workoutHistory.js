@@ -17,6 +17,7 @@ import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import NotLoggedIn from "../notLoggedIn";
 
 function WorkoutHistory() {
+    const [loggedIn, setLoggedIn] = useState(null);
     const [workouts, setWorkouts] = useState(undefined);
     const [state, setState] = useState(null);
     const dbUrl = process.env.REACT_APP_DB_URL;
@@ -27,9 +28,10 @@ function WorkoutHistory() {
         // eslint-disable-next-line no-unused-vars
         const listen = onAuthStateChanged(auth, (user) => {
             if (user) {
+                setLoggedIn(true);
                 getPreviousWorkouts();
             } else {
-
+                setLoggedIn(false);
             }
         });
     }, []);
@@ -208,7 +210,7 @@ function WorkoutHistory() {
     return (
         <>
             <TopBar />
-            {auth.currentUser ? (
+            {loggedIn === true ? (
                 <>
                     <Box sx={{
                         marginTop: 2,
@@ -234,7 +236,12 @@ function WorkoutHistory() {
                     </Box>
                 </>
             ) : (
+                <></>
+            )}
+            {loggedIn === false ? (
                 <NotLoggedIn />
+            ) : (
+                <></>
             )}
         </>
     );
