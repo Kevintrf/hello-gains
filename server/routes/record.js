@@ -503,7 +503,7 @@ router.route("/community/getLatestPosts").get(async function (req, res) {
   try {
     var communityPosts = await db_connect
       .collection("communityPosts")
-      .find({}).limit(10)
+      .find({})
       .toArray();
     res.json(communityPosts);
   } catch (e) {
